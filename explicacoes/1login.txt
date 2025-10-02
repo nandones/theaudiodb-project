@@ -1,0 +1,33 @@
+login.tsx -> página que contém a usuario e senha hardcoded, envia o login para authSlice.tsx 
+        const usuario = {
+          id: gerarId(), // será substituído pelo id estável no authSlice
+          email: email,
+          dataLogin: new Date().toISOString()
+        };
+
+authSlice.tsx -> 
+{
+  isAuthenticated: boolean;
+  usuario: { id, email, dataLogin? } | null;
+  carregando: boolean;
+  erro: string | null;
+}
+
+e seta o carregando para falso
+
+storage.tsx -> principal função é o localstorage, mas pertinente ao login é 
+o validar email e validar senha, sua função gerar id não vinculava o id ao email 
+e quebrava a aplicação, por isso é gerado no authslice
+
+App.tsx -> monta as rotas
+
+header.tsx -> saúda o user, possui botão de para Logout, dispatch definido em authslice 
+
+store/index.tsx -> Registra o auth reducer no store.
+
+types/index.tsx -> Define a interface dos objetos, incluindo usuario:
+export interface Usuario {
+  id: string;
+  email: string;
+  dataLogin?: string;
+}

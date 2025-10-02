@@ -1,0 +1,11 @@
+authSlice.tsx -> Mantém isAuthenticated, usuario, carregando, erro, com xreduxtoolkit,
+é a "fonte da verdade" da aplicação.
+
+RotaPrivada.tsx ->lê isAuthenticated, se for false, retorna ao login, se true,
+retorna children
+
+App.tsx -> define as rotas e se são privadas ou não, encapsulando como <RotaPrivada>
+
+Login.tsx -> após loginSucesso, isAuthenticated torna-se true
+
+Header.tsx -> o logout derruba acesso ás rotas protegidas

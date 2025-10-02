@@ -80,7 +80,7 @@ const Login: React.FC = () => {
           email: email,
           dataLogin: new Date().toISOString()
         };
-        dispatch(loginSucesso(usuario));
+        dispatch(loginSucesso(usuario));//authslice
       } else {
         dispatch(loginFalha('Email ou senha incorretos'));
       }

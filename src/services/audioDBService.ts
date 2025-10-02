@@ -3,8 +3,7 @@ import type { ResponseAudioDB, Musica, TrackAudioDB } from '../types';
 import { musicasPopularesMock } from '../utils/mockData';
 
 // URL base da API TheAudioDB
-// ATENÇÃO: usar a API KEY correta ( "2" pública ou outra fornecida ). "123" parece placeholder.
-const API_BASE_URL = 'https://www.theaudiodb.com/api/v1/json/2';
+const API_BASE_URL = 'https://www.theaudiodb.com/api/v1/json/123';
 
 // Instância do axios configurada
 const api = axios.create({

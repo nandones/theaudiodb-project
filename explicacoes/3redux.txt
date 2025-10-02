@@ -1,0 +1,21 @@
+index.txt -> cria a store com todos os reducers
+
+slices -> geram reducer + actions automaticamente
+    authSlice.ts -> Estado e ações da autenticação (login, logout, restaurar sessão).
+    playlistsSlice.ts -> CRUD local + gerenciamento de músicas nas playlists (com thunks).
+    musicasSlice.ts -> Busca de músicas populares e faixa específica (async).
+
+exemplificando: em pages/Musicas.tsx temos:
+  // Função para adicionar música à playlist
+  const *adicionarMusicaAPlaylist* = (playlistId: string) => {
+    if (musicaSelecionada) {
+      dispatch(adicionarMusicaPlaylist({
+        playlistId,
+        musica: musicaSelecionada
+      }));
+      fecharModalPlaylist();
+    }
+  };
+
+a nova lista de musicas dessa playlist é persistida no localStorage, e identificamos
+o número de músicas com playlist.musicas.length

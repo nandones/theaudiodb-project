@@ -1,0 +1,97 @@
+localStorage é um armazenamento chave→valor (string) síncrono do navegador.
+
+localStorage x sessionStorage
+localStorage: persistente entre sessões do navegador. Usado para as PLAYLISTS (dados “long-lived”).
+sessionStorage: dura enquanto a aba estiver aberta. Usado para: usuário logado, última playlist acessada e timestamp do login (informações de sessão efêmera).
+
+storage.ts ->
+CHAVES_STORAGE = {
+	PLAYLISTS: 'spotifsc_playlists',          // (localStorage) array de TODAS as playlists de todos os usuários
+	USUARIO_SESSAO: 'spotifsc_usuario_sessao',// (sessionStorage) objeto Usuario atual
+	ULTIMA_PLAYLIST: 'spotifsc_ultima_playlist', // (sessionStorage) id da última playlist aberta
+	ULTIMO_LOGIN: 'spotifsc_ultimo_login'        // (sessionStorage) timestamp ISO do último login
+}
+
+4. Estrutura Persistida em 'spotifsc_playlists'
+JSON.stringify(Array<Playlist>) onde Playlist = {
+	id, nome, usuarioId, musicas: Musica[], dataCriacao, dataModificacao
+}
+As músicas ficam embutidas dentro de cada playlist (modelo não normalizado) para simplicidade.
+
+5. Utilitários (localStorageUtils)
+- salvarPlaylists(playlists): Serializa e grava.
+- carregarPlaylists(): Lê, faz JSON.parse, devolve [] em caso de falha.
+- limparPlaylists(): Remove a chave (não usado no fluxo normal, apenas manutenção/testes).
+Todos envoltos em try/catch para evitar quebra caso o storage esteja cheio ou bloqueado.
+
+6. Fluxo de Escrita (Criar / Editar / Remover Playlist)
+1) Ação do usuário (ex: salvarPlaylist) dispara thunk em playlistsSlice.
+2) Thunk lê TODAS as playlists atuais (carregarPlaylists()).
+3) Aplica mutação (add/update/delete) em memória.
+4) Chama salvarPlaylists(novoArray) → persiste.
+5) Retorna array filtrado ou atualizado para o extraReducer que ajusta o estado Redux.
+
+7. Fluxo de Leitura (Carregar Playlists de um Usuário)
+1) Ao acessar Home ou Playlists → dispatch(carregarPlaylists(usuario.id)).
+2) Thunk lê spotifsc_playlists completo.
+3) Filtra por playlist.usuarioId === usuario.id.
+4) Devolve apenas as playlists do usuário logado → state.playlists.playlists.
+
+8. ID Estável de Usuário
+authSlice gera id determinístico a partir do email. Sem isso, cada login teria novo id e as playlists “sumiriam” (filtro não bateria). Portanto, gerarIdEstaticoPorEmail garante consistência.
+
+9. Derivação de Contadores (sem persistir números)
+- Quantidade de playlists: playlists.length (após filtro)
+- Quantidade de músicas: playlist.musicas.length
+Não salvamos contadores; derivamos sempre que renderiza → evita dados duplicados/desatualizados.
+
+10. Vantagens da Estratégia Atual
+- Simplicidade (uma única chave global).
+- Fácil exportar/backup.
+- Suficiente para o escopo acadêmico e baixo volume.
+
+11. Limitações / Riscos
+- Performance ao crescer (parse de um JSON grande a cada carregamento).
+- Race condition multi-aba (último write ganha).
+- Duplicação de músicas em várias playlists (sem normalização).
+- Sem versionamento de schema (mudanças futuras exigem migração manual).
+- Operações síncronas (podem bloquear brevemente a thread principal, irrelevante em pequeno volume).
+
+12. Melhorias Futuras Possíveis
+- Namespacing: chave por usuário (spotifsc_playlists_<hash>). Facilita carregamento seletivo.
+- Versionamento: campo __schemaVersion para migrações.
+- Normalização: armazenar músicas numa tabela separada e playlists só com ids.
+- Debounce/Batching: agrupar múltiplas edições antes de salvar.
+- Listeners de storage: sincronizar múltiplas abas reagindo ao evento 'storage'.
+- Migrar para IndexedDB se volume ou consultas ficarem mais complexas.
+- Criptografia leve / ofuscação se aparecer dado sensível.
+
+13. Exemplo (Pseudo) do salvarPlaylist
+const todas = localStorageUtils.carregarPlaylists();
+const idx = todas.findIndex(p => p.id === playlist.id);
+if (idx >= 0) {
+	todas[idx] = { ...playlist, dataModificacao: nowISO };
+} else {
+	todas.push({ ...playlist, dataCriacao: nowISO, dataModificacao: nowISO });
+}
+localStorageUtils.salvarPlaylists(todas);
+
+14. Reset Manual para Testes
+localStorage.removeItem('spotifsc_playlists'); // Limpa todas as playlists persistidas
+// Não afeta sessão (sessionStorage).
+
+15. Diferença Entre Logout e Limpeza Total
+- logout: apenas sessionStorageUtils.limparSessao() (mantém playlists).
+- limpeza total: remover também spotifsc_playlists.
+
+16. Boas Práticas Já Adotadas
+- try/catch em cada operação de armazenamento.
+- Filtragem por usuarioId garantindo isolamento lógico por usuário.
+- ID de usuário determinístico para não “perder” dados.
+
+17. Boas Práticas Sugeridas (Pendentes)
+- Marcar limparPlaylists como função de manutenção em comentário.
+- Adicionar aviso se JSON ultrapassar certo tamanho (ex: > 1MB) para prevenir degradação.
+
+Resumo Final
+Playlists persistem em localStorage numa única chave JSON; sessão, última playlist e timestamp ficam em sessionStorage. O design prioriza simplicidade e atende totalmente o requisito de persistência, com caminho claro para evoluir (normalização, versionamento e sincronização multi-aba) se o escopo crescer.
