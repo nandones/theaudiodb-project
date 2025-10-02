@@ -128,8 +128,13 @@ export const validarEmail = (email: string): boolean => {
 /**
  * Função para validar senha
  */
+// Regras atuais: mínimo 6 caracteres E conter pelo menos um emoji (ex.: 😀)
+// Emoji detection simplificada: procura code points fora do BMP comum ou faixa de emoticons
 export const validarSenha = (senha: string): boolean => {
-  return senha.length >= 6;
+  if (senha.length < 6) return false;
+  // Regex ampla para captar emojis comuns (emoticons, símbolos suplementares) – não perfeita, mas suficiente para validação local
+  const emojiRegex = /[\p{Extended_Pictographic}]/u;
+  return emojiRegex.test(senha);
 };
 
 /**

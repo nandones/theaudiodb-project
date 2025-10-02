@@ -4,7 +4,7 @@
 
 **📧 1. Login com Validação (1.0 pt)**
 - Email: `usuario@spotifsc.com`
-- Senha: `123456`
+- Senha: `123456😀` (inclui emoji obrigatório)
 - Validação de formato de email
 - Validação de senha (mínimo 6 caracteres)
 - Redirecionamento automático pós-login

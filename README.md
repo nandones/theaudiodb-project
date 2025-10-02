@@ -69,7 +69,7 @@ http://localhost:5173
 
 ### Login
 - **Email**: `usuario@spotifsc.com`
-- **Senha**: `123456`
+- **Senha**: `123456😀` (a senha deve conter o emoji 😀 no final)
 
 ### Funcionalidades Disponíveis
 

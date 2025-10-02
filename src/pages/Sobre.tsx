@@ -14,7 +14,7 @@ const Sobre: React.FC = () => {
           <Card className="bg-success text-white text-center">
             <Card.Body>
               <h1 className="mb-2">
-                <span className="text-warning">SPOT</span>IFSC
+                <span className="text-danger">SPOT</span>IFSC
               </h1>
               <p className="lead mb-0">
                 Sistema de Gerenciamento de Playlists
@@ -39,7 +39,8 @@ const Sobre: React.FC = () => {
                   </Card.Title>
                   <Card.Text>
                     Sistema de login com validação de email e senha. 
-                    Credenciais: <code>usuario@spotifsc.com</code> / <code>123456</code>
+                    Credenciais:<br/> <code>usuario@spotifsc.com</code> / <code>123456😀</code>
+                    <br/><code>usuario2@spotifsc.com</code> / <code>654321😀</code> <br/>
                   </Card.Text>
                   <div>
                     <Badge bg="primary" className="me-1">Email Validation</Badge>
@@ -95,13 +96,14 @@ const Sobre: React.FC = () => {
                   <Card.Title className="text-success">
                     ✅ Integração com API Externa
                   </Card.Title>
-                  <Card.Text>
+                    <Card.Text>
                     Consumo da API TheAudioDB para buscar músicas por artista e
-                    nome, exibindo as 10 mais populares*. Fallback para dados mock.
+                    nome, exibindo as 10 mais populares
+                    <span className="text-danger">*</span>. Fallback para dados mock.
                     <br />
-                    * Não há função gratuita na API para buscar as 10 músicas mais populares.
-                  </Card.Text>
-                  <div>
+                    <p className="text-danger">* Não há função gratuita na API para buscar as 10 músicas mais populares.</p>
+                    </Card.Text>
+                  <div>quero
                     <Badge bg="danger" className="me-1">TheAudioDB API</Badge>
                     <Badge bg="danger" className="me-1">Axios</Badge>
                     <Badge bg="danger">Error Handling</Badge>

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Container, Row, Col, Card, Button, Form, Alert, Spinner, InputGroup, Modal } from 'react-bootstrap';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { buscarMusicasPopulares, buscarMusicaEspecifica, limparResultadosBusca } from '../store/musicasSlice';
 import { carregarPlaylists } from '../store/playlistsSlice';
 import { adicionarMusicaPlaylist } from '../store/playlistsSlice';
+import MusicaCard from '../components/MusicaCard';
 import type { Musica } from '../types';
 
 /**
@@ -70,45 +71,34 @@ const Musicas: React.FC = () => {
     }
   };
 
-  // Componente para exibir uma música
-  const MusicaCard: React.FC<{ musica: Musica; showAddButton?: boolean }> = ({ 
-    musica, 
-    showAddButton = true 
-  }) => (
-    <Card className="musica-card h-100 fade-in">
-      <Card.Body>
-        <Card.Title className="h6 text-success">{musica.nome}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{musica.artista}</Card.Subtitle>
-        <Card.Text>
-          <small className="text-muted">
-            <strong>Gênero:</strong> {musica.genero}<br />
-            <strong>Ano:</strong> {musica.ano || 'N/A'}
-          </small>
-        </Card.Text>
-        {musica.descricao && (
-          <Card.Text>
-            <small className="text-muted">
-              {musica.descricao.substring(0, 100)}
-              {musica.descricao.length > 100 && '...'}
-            </small>
-          </Card.Text>
-        )}
-      </Card.Body>
-      {showAddButton && (
-        <Card.Footer className="bg-transparent">
-          <Button 
-            variant="success" 
-            size="sm" 
-            className="w-100"
-            onClick={() => abrirModalPlaylist(musica)}
-            disabled={playlists.length === 0}
-          >
-            {playlists.length === 0 ? 'Criar playlist primeiro' : 'Adicionar à playlist'}
-          </Button>
-        </Card.Footer>
-      )}
-    </Card>
-  );
+  // Memo da lista de populares para não re-renderizar a cada digitação
+  const popularCards = useMemo(() => (
+    musicasPopulares.map(m => (
+      <Col key={m.id} md={6} lg={4} className="mb-3">
+        <MusicaCard
+          musica={m}
+          showAddButton
+          onAdd={abrirModalPlaylist}
+          disableAdd={playlists.length === 0}
+          animate={false} // não animar populares para evitar "piscar"
+        />
+      </Col>
+    ))
+  ), [musicasPopulares, playlists.length]);
+
+  const resultadoCards = useMemo(() => (
+    resultadosBusca.map(m => (
+      <Col key={m.id} md={6} lg={4} className="mb-3">
+        <MusicaCard
+          musica={m}
+          showAddButton
+          onAdd={abrirModalPlaylist}
+          disableAdd={playlists.length === 0}
+          animate
+        />
+      </Col>
+    ))
+  ), [resultadosBusca, playlists.length]);
 
   return (
     <Container className="py-4">
@@ -208,11 +198,7 @@ const Musicas: React.FC = () => {
             </Col>
           </Row>
           <Row className="mb-5">
-            {resultadosBusca.map((musica) => (
-              <Col key={musica.id} md={6} lg={4} className="mb-3">
-                <MusicaCard musica={musica} />
-              </Col>
-            ))}
+            {resultadoCards}
           </Row>
         </>
       )}
@@ -244,11 +230,7 @@ const Musicas: React.FC = () => {
         </Row>
       ) : musicasPopulares.length > 0 ? (
         <Row>
-          {musicasPopulares.map((musica) => (
-            <Col key={musica.id} md={6} lg={4} className="mb-3">
-              <MusicaCard musica={musica} />
-            </Col>
-          ))}
+          {popularCards}
         </Row>
       ) : (
         <Row>

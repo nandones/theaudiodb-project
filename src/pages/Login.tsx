@@ -19,8 +19,8 @@ const Login: React.FC = () => {
 
   // Conjunto de usuários estáticos permitidos (mock de "cadastro")
   const USUARIOS_VALIDOS: { email: string; senha: string }[] = [
-    { email: 'usuario@spotifsc.com',  senha: '123456' },
-    { email: 'usuario2@spotifsc.com', senha: '654321' },
+    { email: 'usuario@spotifsc.com',  senha: '123456😀' },
+    { email: 'usuario2@spotifsc.com', senha: '654321😀' },
   ];
 
   // Limpar erros quando o componente for desmontado
@@ -48,7 +48,7 @@ const Login: React.FC = () => {
     if (!senha.trim()) {
       erros.push('Senha é obrigatória');
     } else if (!validarSenha(senha)) {
-      erros.push('Senha deve ter pelo menos 6 caracteres');
+      erros.push('Senha deve ter pelo menos 6 caracteres e conter um emoji (ex: 😀)');
     }
 
     setErrosValidacao(erros);
