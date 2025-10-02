@@ -1,0 +1,231 @@
+/* Estilos personalizados para o SPOTIFSC */
+
+:root {
+  --spotifsc-verde: #28a745;
+  --spotifsc-verde-escuro: #1e7e34;
+  --spotifsc-vermelho: #dc3545;
+  --spotifsc-vermelho-escuro: #c82333;
+  --spotifsc-branco: #ffffff;
+  --spotifsc-cinza-claro: #f8f9fa;
+  --spotifsc-cinza: #6c757d;
+}
+
+/* Estilos globais */
+body {
+  background-color: var(--spotifsc-branco);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Fix para página de login */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.login-card .card-body {
+  padding: 2rem !important;
+}
+
+/* Responsividade para login */
+@media (max-width: 576px) {
+  .login-container {
+    padding: 15px;
+  }
+  
+  .login-card {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  .login-card .card-body {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Customizações do Bootstrap para o tema SPOTIFSC */
+.btn-success {
+  background-color: var(--spotifsc-verde);
+  border-color: var(--spotifsc-verde);
+}
+
+.btn-success:hover {
+  background-color: var(--spotifsc-verde-escuro);
+  border-color: var(--spotifsc-verde-escuro);
+}
+
+.btn-danger {
+  background-color: var(--spotifsc-vermelho);
+  border-color: var(--spotifsc-vermelho);
+}
+
+.btn-danger:hover {
+  background-color: var(--spotifsc-vermelho-escuro);
+  border-color: var(--spotifsc-vermelho-escuro);
+}
+
+.text-success {
+  color: var(--spotifsc-verde) !important;
+}
+
+.text-danger {
+  color: var(--spotifsc-vermelho) !important;
+}
+
+.bg-success {
+  background-color: var(--spotifsc-verde) !important;
+}
+
+.bg-danger {
+  background-color: var(--spotifsc-vermelho) !important;
+}
+
+.border-success {
+  border-color: var(--spotifsc-verde) !important;
+}
+
+.border-danger {
+  border-color: var(--spotifsc-vermelho) !important;
+}
+
+/* Navbar personalizada */
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Cards com hover */
+.card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading spinners */
+.spinner-border-success {
+  color: var(--spotifsc-verde);
+}
+
+/* Música card styles */
+.musica-card {
+  border-left: 4px solid var(--spotifsc-verde);
+}
+
+.musica-card:hover {
+  border-left-color: var(--spotifsc-vermelho);
+}
+
+/* Playlist styles */
+.playlist-header {
+  background: linear-gradient(135deg, var(--spotifsc-verde), var(--spotifsc-verde-escuro));
+  color: white;
+}
+
+/* Form styles */
+.form-control:focus {
+  border-color: var(--spotifsc-verde);
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+/* Alert customizations */
+.alert-success {
+  background-color: rgba(40, 167, 69, 0.1);
+  border-color: var(--spotifsc-verde);
+  color: var(--spotifsc-verde-escuro);
+}
+
+.alert-danger {
+  background-color: rgba(220, 53, 69, 0.1);
+  border-color: var(--spotifsc-vermelho);
+  color: var(--spotifsc-vermelho-escuro);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+/* Utility classes */
+.shadow-sm-custom {
+  box-shadow: 0 0.125rem 0.25rem rgba(40, 167, 69, 0.075);
+}
+
+.text-spotifsc-green {
+  color: var(--spotifsc-verde);
+}
+
+.text-spotifsc-red {
+  color: var(--spotifsc-vermelho);
+}
+
+.bg-spotifsc-green {
+  background-color: var(--spotifsc-verde);
+}
+
+.bg-spotifsc-red {
+  background-color: var(--spotifsc-vermelho);
+}
+
+/* Loading animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--spotifsc-cinza-claro);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--spotifsc-verde);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--spotifsc-verde-escuro);
+}
