@@ -17,9 +17,11 @@ const Login: React.FC = () => {
   const { isAuthenticated, carregando, erro } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  // Dados estáticos para login (conforme especificação)
-  const EMAIL_VALIDO = 'usuario@spotifsc.com';
-  const SENHA_VALIDA = '123456';
+  // Conjunto de usuários estáticos permitidos (mock de "cadastro")
+  const USUARIOS_VALIDOS: { email: string; senha: string }[] = [
+    { email: 'usuario@spotifsc.com',  senha: '123456' },
+    { email: 'usuario2@spotifsc.com', senha: '654321' },
+  ];
 
   // Limpar erros quando o componente for desmontado
   useEffect(() => {
@@ -71,19 +73,18 @@ const Login: React.FC = () => {
 
     // Simular verificação de credenciais
     setTimeout(() => {
-      if (email === EMAIL_VALIDO && senha === SENHA_VALIDA) {
-        // Login bem-sucedido
+      const encontrado = USUARIOS_VALIDOS.find(u => u.email === email);
+      if (encontrado && encontrado.senha === senha) {
         const usuario = {
-          id: gerarId(),
+          id: gerarId(), // será substituído pelo id estável no authSlice
           email: email,
           dataLogin: new Date().toISOString()
         };
         dispatch(loginSucesso(usuario));
       } else {
-        // Login falhou
         dispatch(loginFalha('Email ou senha incorretos'));
       }
-    }, 1000); // Simular delay de rede
+    }, 800); // leve delay simulado
   };
 
   return (
@@ -153,12 +154,16 @@ const Login: React.FC = () => {
                 </Button>
 
                 {/* Dados para teste */}
-                <Card className="bg-light border-0">
+                <Card className="bg-light border-0 mt-2">
                   <Card.Body className="p-2">
                     <small className="text-muted d-block text-center">
-                      <strong>Dados para teste:</strong><br />
-                      Email: {EMAIL_VALIDO}<br />
-                      Senha: {SENHA_VALIDA}
+                      <strong>Usuários de teste:</strong><br />
+                      {USUARIOS_VALIDOS.map(u => (
+                        <span key={u.email} style={{ display: 'inline-block', margin: '2px 0' }}>
+                          {u.email} / {u.senha}
+                          <br />
+                        </span>
+                      ))}
                     </small>
                   </Card.Body>
                 </Card>
