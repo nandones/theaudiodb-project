@@ -126,7 +126,12 @@ const Home: React.FC = () => {
               <Card.Text>
                 Crie uma nova playlist e adicione suas músicas favoritas
               </Card.Text>
-              <Link to="/playlists" style={{ textDecoration: 'none' }}>
+              {/* Passar estado para página de playlists abrir modal automaticamente */}
+              <Link
+                to="/playlists"
+                state={{ autoNovaPlaylist: true }}
+                style={{ textDecoration: 'none' }}
+              >
                 <Button variant="warning">Criar Playlist</Button>
               </Link>
             </Card.Body>

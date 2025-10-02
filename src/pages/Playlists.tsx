@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Modal, Form, Alert, Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { carregarPlaylists, salvarPlaylist, excluirPlaylist } from '../store/playlistsSlice';
 import { gerarId } from '../utils/storage';
@@ -14,6 +14,8 @@ const Playlists: React.FC = () => {
   const { usuario } = useAppSelector((state) => state.auth);
   const { playlists, carregando, erro } = useAppSelector((state) => state.playlists);
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // Estados para modal de criação/edição
   const [showModal, setShowModal] = useState(false);
@@ -21,12 +23,23 @@ const Playlists: React.FC = () => {
   const [nomePlaylist, setNomePlaylist] = useState('');
   const [erroValidacao, setErroValidacao] = useState('');
 
-  // Carregar playlists ao montar o componente
+  // Carregar playlists ao montar e tratar criação automática
   useEffect(() => {
     if (usuario) {
       dispatch(carregarPlaylists(usuario.id));
     }
   }, [dispatch, usuario]);
+
+  // Abrir modal automaticamente se vier de Home com state.autoNovaPlaylist
+  useEffect(() => {
+    const state = location.state as { autoNovaPlaylist?: boolean } | null;
+    if (state?.autoNovaPlaylist) {
+      abrirModalNovaPlaylist();
+      // Limpar o state da navegação para evitar reabertura ao voltar
+      navigate(location.pathname, { replace: true });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state]);
 
   // Função para abrir modal de nova playlist
   const abrirModalNovaPlaylist = () => {
