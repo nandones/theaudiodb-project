@@ -1,189 +1,153 @@
-## 🎵 SPOTIFSC - Resumo da Implementação
+# SPOTIFSC - Sistema de Gerenciamento de Playlists
 
-### ✅ TODOS OS REQUISITOS IMPLEMENTADOS
+🎵 Uma aplicação web desenvolvida em React para gerenciar playlists de músicas, integrando com a API TheAudioDB.
 
-**📧 1. Login com Validação (1.0 pt)**
-- Email: `usuario@spotifsc.com`
-- Senha: `123456`
-- Validação de formato de email
-- Validação de senha (mínimo 6 caracteres)
-- Redirecionamento automático pós-login
+## 📋 Sobre o Projeto
 
-**🔒 2. Rotas Protegidas (1.0 pt)**
-- Componente `PrivateRoute` implementado
-- Proteção das rotas: `/home`, `/playlists`, `/musicas`, `/sobre`
-- Redirecionamento automático para `/login` se não autenticado
+O SPOTIFSC é uma aplicação web que permite aos usuários criar, gerenciar e consultar playlists de músicas. Foi desenvolvido como parte da Avaliação I, demonstrando o uso de múltiplas tecnologias do ecossistema React moderno.
 
-**💾 3. CRUD de Playlists (1.0 pt)**
-- ✅ **CREATE**: Criar novas playlists com validação de nome
-- ✅ **READ**: Listar playlists do usuário logado
-- ✅ **UPDATE**: Editar nome das playlists
-- ✅ **DELETE**: Excluir playlists com confirmação
-- Persistência completa no **LocalStorage**
-- Filtro por usuário (apenas criador acessa suas playlists)
+### 🎯 Funcionalidades Principais
 
-**🌐 4. Integração TheAudioDB + LocalStorage (1.0 pt)**
-- Consumo da API: `https://www.theaudiodb.com/api/v1/json/2`
-- Busca por artista: `/search.php?s={artista}`
-- Busca por música: `/searchtrack.php?s={musica}`
-- Top 10 músicas populares
-- Fallback para dados mock quando API indisponível
-- Adição de músicas às playlists
-- Sincronização com LocalStorage
+- ✅ **Autenticação de usuários** com email e senha
+- ✅ **Rotas protegidas** para acesso às funcionalidades
+- ✅ **CRUD completo de playlists** (Criar, Ler, Atualizar, Deletar)
+- ✅ **Busca de músicas** por gênero, artista, ano ou nome
+- ✅ **Top 10 músicas populares**
+- ✅ **Integração com API externa** (TheAudioDB)
+- ✅ **Gerenciamento de estado** com Redux Toolkit
+- ✅ **Persistência local** com LocalStorage
+- ✅ **Armazenamento temporário** com SessionStorage
 
-**🏪 5. Redux (Estado Global) (1.0 pt)**
-- **Redux Toolkit** configurado
-- **3 Slices organizados**:
-  - `authSlice`: Autenticação e usuário
-  - `playlistsSlice`: Gerenciamento de playlists
-  - `musicasSlice`: Busca e músicas populares
-- **Async Thunks** para operações assíncronas
-- **Hooks tipados** para TypeScript
-- Sincronização automática com Storage
+## 🛠️ Tecnologias Utilizadas
 
-**💻 6. SessionStorage (Requisito Cumprido)**
-- Dados do usuário logado
-- Última playlist acessada
-- Data/hora do último login
-- Restauração de sessão ao recarregar página
+- **React 19** - Biblioteca principal para interface
+- **TypeScript** - Tipagem estática
+- **Vite** - Build tool e desenvolvimento
+- **Redux Toolkit** - Gerenciamento de estado global
+- **React Router** - Roteamento da aplicação
+- **Bootstrap 5** - Framework CSS
+- **Axios** - Cliente HTTP para APIs
+- **Yarn 4** - Gerenciador de pacotes
 
-### 🎨 DESIGN E INTERFACE
+## 🎨 Design e Tema
 
-**Cores do Projeto:**
-- 🟢 Verde (`#28a745`) - Cor principal
-- 🔴 Vermelho (`#dc3545`) - Detalhes (SPOT em vermelho)
-- ⚪ Branco - Background principal
+- **Cores principais**: Branco, Verde (#28a745) e Vermelho (#dc3545)
+- **Nome**: SPOTIFSC (com destaque em vermelho para "SPOT")
+- **Interface responsiva** com Bootstrap
+- **Experiência do usuário otimizada**
 
-**Interface Responsiva:**
-- Bootstrap 5 integrado
-- Design mobile-first
-- Componentes reutilizáveis
-- Feedback visual para todas as ações
+## 🚀 Como Executar
 
-### 🛠️ STACK TECNOLÓGICO
+### Pré-requisitos
 
-**Frontend:**
-- React 19
-- TypeScript
-- Vite (build tool)
-- Bootstrap 5
-- React Router DOM
+- Node.js 18+ instalado
+- Yarn 4+ configurado
 
-**Estado Global:**
-- Redux Toolkit
-- React Redux
-- Async Thunks
+### Instalação
 
-**HTTP & APIs:**
-- Axios
-- TheAudioDB API
-- Error handling robusto
-
-**Storage:**
-- LocalStorage (playlists)
-- SessionStorage (dados temporários)
-
-**Ferramentas:**
-- Yarn 4
-- ESLint
-- Hot Module Replacement
-
-### 📁 ESTRUTURA COMPLETA
-
-```
-src/
-├── components/
-│   ├── Header.tsx           # Navbar com navegação
-│   └── RotaPrivada.tsx      # Proteção de rotas
-├── pages/
-│   ├── Login.tsx            # Autenticação
-│   ├── Home.tsx             # Dashboard principal
-│   ├── Playlists.tsx        # Gerenciamento de playlists
-│   ├── DetalhesPlaylist.tsx # Visualização detalhada
-│   ├── Musicas.tsx          # Exploração de músicas
-│   └── Sobre.tsx            # Apresentação do projeto
-├── store/
-│   ├── index.ts             # Configuração do store
-│   ├── hooks.ts             # Hooks tipados
-│   ├── authSlice.ts         # Estado de autenticação
-│   ├── playlistsSlice.ts    # Estado das playlists
-│   └── musicasSlice.ts      # Estado das músicas
-├── services/
-│   └── audioDBService.ts    # Cliente da API
-├── types/
-│   └── index.ts             # Definições TypeScript
-├── utils/
-│   ├── storage.ts           # Funções de Storage
-│   └── mockData.ts          # Dados simulados
-└── assets/                  # Recursos estáticos
+1. Configure o Yarn (se necessário):
+```bash
+yarn set version 4.9.2
 ```
 
-### 🔧 FUNCIONALIDADES EXTRAS
-
-**Experiência do Usuário:**
-- Loading states em todas as operações
-- Mensagens de erro amigáveis
-- Validações em tempo real
-- Confirmações para ações destrutivas
-- Dados da última sessão
-
-**Robustez:**
-- Tratamento de erros da API
-- Fallback para dados offline
-- Validações de dados
-- TypeScript strict mode
-- Code splitting por rotas
-
-**Interface Moderna:**
-- Animações CSS
-- Cards responsivos
-- Badges e indicadores
-- Design consistente
-- Feedback visual
-
-### 🚀 COMO EXECUTAR
-
-1. **Instalar dependências:**
+2. Instale as dependências:
 ```bash
 yarn install
 ```
 
-2. **Executar em desenvolvimento:**
+3. Execute em modo de desenvolvimento:
 ```bash
 yarn dev
 ```
 
-3. **Acessar:**
+4. Acesse no navegador:
 ```
 http://localhost:5173
 ```
 
-4. **Login:**
-- Email: `usuario@spotifsc.com`
-- Senha: `123456`
+## 🔐 Como Usar
 
-### 📊 CRITÉRIOS DE AVALIAÇÃO
+### Login
+- **Email**: `usuario@spotifsc.com`
+- **Senha**: `123456`
 
-- ✅ **Organização e boas práticas (1.0 pt)**: Código modular, documentado, TypeScript
-- ✅ **Login com validação (1.0 pt)**: Sistema completo implementado
-- ✅ **Rotas protegidas (1.0 pt)**: PrivateRoute funcional
-- ✅ **Redux (1.0 pt)**: Store configurado com 3 slices
-- ✅ **CRUD de playlists (1.0 pt)**: Operações completas + LocalStorage
-- ✅ **Integração API + Storage (1.0 pt)**: TheAudioDB + persistência
-- ✅ **Apresentação (4.0 pts)**: Página "Sobre" com documentação completa
+### Funcionalidades Disponíveis
 
-**TOTAL: 10/10 pontos** 🎯
+1. **Dashboard**: Visualize músicas populares e acesso rápido às funcionalidades
+2. **Playlists**: Crie, edite e gerencie suas playlists
+3. **Explorar Músicas**: Busque músicas da API TheAudioDB e adicione às playlists
+4. **Navegação**: Todos os dados são persistidos localmente
 
-### 🏆 DESTAQUES DA IMPLEMENTAÇÃO
+## 📁 Estrutura do Projeto
 
-1. **Código 100% em português** com comentários explicativos
-2. **TypeScript** em modo strict para máxima segurança
-3. **Fallback inteligente** para API indisponível
-4. **Interface polida** com Bootstrap 5
-5. **Arquitetura escalável** com Redux Toolkit
-6. **Documentação completa** no código e README
-7. **Experiência do usuário excepcional**
+```
+src/
+├── components/          # Componentes reutilizáveis
+│   ├── Header.tsx      # Navegação principal
+│   └── RotaPrivada.tsx # Proteção de rotas
+├── pages/              # Páginas da aplicação
+│   ├── Login.tsx       # Página de autenticação
+│   ├── Home.tsx        # Dashboard principal
+│   ├── Playlists.tsx   # Gerenciamento de playlists
+│   └── Musicas.tsx     # Exploração de músicas
+├── store/              # Estado global Redux
+│   ├── index.ts        # Configuração do store
+│   ├── hooks.ts        # Hooks tipados do Redux
+│   ├── authSlice.ts    # Estado de autenticação
+│   ├── playlistsSlice.ts # Estado das playlists
+│   └── musicasSlice.ts # Estado das músicas
+├── services/           # Integração com APIs
+│   └── audioDBService.ts # Cliente da API TheAudioDB
+├── types/              # Definições TypeScript
+│   └── index.ts        # Interfaces e tipos
+├── utils/              # Utilitários
+│   └── storage.ts      # Funções para Storage
+└── assets/             # Recursos estáticos
+```
+
+## 🧪 Funcionalidades Implementadas
+
+### ✅ Requisitos Atendidos
+
+1. **Login com validação** ✅
+   - Email e senha estáticos
+   - Validação de formato
+   - Redirecionamento pós-login
+
+2. **Rotas protegidas** ✅
+   - PrivateRoute implementado
+   - Redirecionamento para login
+
+3. **CRUD de Playlists** ✅
+   - Criar, listar, editar, excluir
+   - Persistência no LocalStorage
+   - Filtro por usuário
+
+4. **Integração TheAudioDB** ✅
+   - Busca por artista e música
+   - Top 10 populares
+   - Adição às playlists
+
+5. **Redux para estado** ✅
+   - Store configurado
+   - Slices organizados
+   - Sincronização com Storage
+
+6. **SessionStorage** ✅
+   - Dados de sessão
+   - Última playlist acessada
+   - Histórico de login
+
+## 🎯 Critérios de Avaliação
+
+- **Organização e boas práticas**: ✅ Código modular e documentado
+- **Login com validação**: ✅ Implementado conforme especificação
+- **Rotas protegidas**: ✅ PrivateRoute funcional
+- **Redux**: ✅ Estado global gerenciado
+- **CRUD de playlists**: ✅ Funcionalidades completas
+- **Integração API + Storage**: ✅ Dados persistidos e sincronizados
 
 ---
 
-**PROJETO COMPLETAMENTE FUNCIONAL E PRONTO PARA APRESENTAÇÃO** ✨
+**SPOTIFSC** - Sistema de Gerenciamento de Playlists
+Desenvolvido com ❤️ usando React + TypeScript

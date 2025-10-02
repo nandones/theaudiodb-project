@@ -96,8 +96,10 @@ const Sobre: React.FC = () => {
                     ✅ Integração com API Externa
                   </Card.Title>
                   <Card.Text>
-                    Consumo da API TheAudioDB para buscar músicas por artista, 
-                    nome e exibir top 10 populares. Fallback para dados mock.
+                    Consumo da API TheAudioDB para buscar músicas por artista e
+                    nome, exibindo as 10 mais populares*. Fallback para dados mock.
+                    <br />
+                    * Não há função gratuita na API para buscar as 10 músicas mais populares.
                   </Card.Text>
                   <div>
                     <Badge bg="danger" className="me-1">TheAudioDB API</Badge>
